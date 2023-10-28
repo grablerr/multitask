@@ -3,7 +3,6 @@ import argparse
 import requests
 from multiprocessing import Pool
 
-# Функция для загрузки изображения по URL
 def download_image(url, output_dir):
     try:
         response = requests.get(url)
@@ -33,14 +32,11 @@ def main():
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    # Создаем пул процессов с указанным количеством
     num_processes = os.cpu_count()
     pool = Pool(processes=num_processes)
 
-    # Распараллеливаем загрузку изображений
     pool.starmap(download_image, [(url, output_dir) for url in input_urls])
 
-    # Завершаем работу пула процессов
     pool.close()
     pool.join()
 
